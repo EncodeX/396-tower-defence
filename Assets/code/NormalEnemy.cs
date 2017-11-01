@@ -6,7 +6,7 @@ using UnityEngine;
 public class NormalEnemy : MonoBehaviour
 {
 	private int healthpoints = 100;
-	private Vector3 speed = new Vector3(0.5f, 0.5f, 0);
+	private Vector3 speed = new Vector3(-0.1f, -0.1f, 0);
 	// Use this for initialization
 	void Start()
 	{
