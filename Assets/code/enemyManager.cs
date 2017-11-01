@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class enemyManager : MonoBehaviour
+public class enemyManager
 {
     private Transform _holder;
     private Object _NormalEnemy = Resources.Load("Normal_Enemy");
