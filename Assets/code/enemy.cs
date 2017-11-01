@@ -6,7 +6,7 @@ using UnityEngine;
 public class enemy : MonoBehaviour
 {
 	private int healthpoints = 100;
-	private vector3 speed = new vector3(0.5, 0.5, 0);
+	private Vector3 speed = new Vector3(0.5, 0.5, 0);
 	// Use this for initialization
 	void Start()
 	{
@@ -16,12 +16,12 @@ public class enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		this.transform.position = this.transform.position + speed * time.delta;
+        this.transform.position = this.transform.position + speed * Time.deltaTime;
 	}
 
 	internal void OnCollisionEnter2D(Collision2D other)
 	{
-		if (other.gameObject.name.contains("base"))
+        if (other.gameObject.name.Contains("base"))
 		{
 			//other.gameObject.hitBase(healthpoints);
 			healthpoints = 0;
