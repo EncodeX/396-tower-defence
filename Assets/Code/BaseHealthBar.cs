@@ -11,9 +11,9 @@ public class BaseHealthBar : MonoBehaviour {
 	void Start () {
 		_baseHealthBarRect = GetComponent<RectTransform>();
 		_slider = GetComponent<Slider>();
-		_slider.normalizedValue = 1f;
 		_slider.maxValue = 100f;
 		_slider.minValue = 0f;
+		_slider.value = 100f;
 	}
 	
 	// Update is called once per frame
@@ -24,6 +24,11 @@ public class BaseHealthBar : MonoBehaviour {
 	}
 
 	public void PerformDamage(float points) {
-		_slider.value -= points;
+		if (_slider.value - points < 0) {
+			_slider.value = 0;
+		}
+		else {
+			_slider.value -= points;
+		}
 	}
 }
