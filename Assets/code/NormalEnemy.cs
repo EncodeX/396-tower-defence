@@ -5,33 +5,48 @@ using UnityEngine;
 
 public class NormalEnemy : MonoBehaviour
 {
-	private int healthpoints = 100;
-	private Vector3 speed = new Vector3(-0.1f, -0.1f, 0);
-	// Use this for initialization
-	void Start()
+	private float _healthpoints;
+    private string _type;
+
+	public void Initialize(Vector3 speed, string type, float healthpoints)
 	{
-		healthpoints = 100;
+        var rb = GetComponent<Rigidbody>();
+        rb.velocity = speed;
+        _healthpoints = healthpoints;
+        _type = type;
 	}
+
 
 	// Update is called once per frame
 	void Update()
 	{
-        this.transform.position = this.transform.position + speed * Time.deltaTime;
+		var rb = GetComponent<Rigidbody>();
+        this.transform.position = this.transform.position + rb.velocity * Time.deltaTime;
 	}
 
-	internal void OnCollisionEnter2D(Collision2D other)
+	internal void OnCollisionEnter(Collision other)
 	{
-        if (other.gameObject.name.Contains("base"))
+        if (other.gameObject.name.Contains("Base"))
 		{
-			//other.gameObject.hitBase(healthpoints);
-			healthpoints = 0;
+            //other.gameObject.hitBase(healthpoints);
+            Game.Ctx.BaseHealthBar.PerformDamage(_healthpoints / 10f);
+            _healthpoints = 0;
+            Die();
 		}
-		Die();
+		
 	}
 
 	private void Die()
 	{
 		Destroy(gameObject);
+	}
+
+	public void PerformDamage(float points)
+	{
+		_healthpoints -= points;
+        if (_healthpoints < 0.01f){
+            Die();
+        }
 	}
 
 
