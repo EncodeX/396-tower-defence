@@ -14,6 +14,7 @@ public class BaseHealthBar : MonoBehaviour {
 		_slider.normalizedValue = 1f;
 		_slider.maxValue = 100f;
 		_slider.minValue = 0f;
+        _slider.value = 100f;
 	}
 	
 	// Update is called once per frame
@@ -23,7 +24,16 @@ public class BaseHealthBar : MonoBehaviour {
 		_baseHealthBarRect.anchoredPosition = new Vector2(-width, height);
 	}
 
+	private void Die()
+	{
+		Destroy(gameObject);
+	}
+
 	public void PerformDamage(float points) {
 		_slider.value -= points;
+		//if (_slider.value < 0.01f)
+		//{
+		//	Die();
+		//}
 	}
 }
