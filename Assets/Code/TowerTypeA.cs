@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 
 namespace Code {
-    public class TowerTypeA : MonoBehaviour {
+    public class TowerTypeA : Tower {
         private static float _cooldown = .6f;
         private float _cooldownTime;
         
         private Transform _head;
         private Transform _gun;
+
+        public GameObject Initialize(int row, int col) {
+            Cost = 100;
+            Row = row;
+            Col = col;
+            return gameObject;
+        }
 
         // Use this for initialization
         void Start() {

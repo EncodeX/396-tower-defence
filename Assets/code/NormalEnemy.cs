@@ -4,6 +4,7 @@ namespace Code {
     public class NormalEnemy : MonoBehaviour {
         private float _healthpoints;
         private string _type;
+        private static int _value = 20;
 
         public void Initialize(Vector3 speed, string type, float healthpoints) {
             var rb = GetComponent<Rigidbody>();
@@ -35,6 +36,7 @@ namespace Code {
         public void PerformDamage(float points) {
             _healthpoints -= points;
             if (_healthpoints < 0.01f) {
+                Game.Ctx.AddMoney(_value);
                 Die();
             }
         }
