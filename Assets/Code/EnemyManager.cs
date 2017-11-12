@@ -9,7 +9,7 @@ namespace Code {
         private const float SpawnTime = 3f;
         private const int MaxEnemyCount = 8;
         
-        private float _lastspawn;
+        private float _lastspawn = Time.time - SpawnTime;
         
         public static Vector3 NormalEnemySpeed = new Vector3(-0.2f, 0f, -0.2f);
         public static float NormalEnemyHealthpoints = 100f;

@@ -53,6 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4852626736125440}
   - component: {fileID: 114492070260648732}
+  - component: {fileID: 65593662288247424}
   m_Layer: 0
   m_Name: TowerTypeA
   m_TagString: Untagged
@@ -282,6 +283,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830569363261160}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65593662288247424
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1718476319918724}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 0.9, z: 0.7}
+  m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!114 &114492070260648732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,6 +306,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0a740fab5a64bbdb930d8d4c058309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cost: 0
+  Row: 0
+  Col: 0
 --- !u!135 &135236069696408136
 SphereCollider:
   m_ObjectHideFlags: 1
