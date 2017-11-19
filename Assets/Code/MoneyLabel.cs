@@ -17,7 +17,7 @@ namespace Code {
 			var height = Screen.height * .5f;
 			var width = Screen.width * .5f;
 			_moneyLabelRect.anchoredPosition = new Vector2(-width + 170, height);
-			_moneyLabel.text = "Money " + Game.Ctx.GetPlayerMoney();
+			_moneyLabel.text = "Money: " + Game.Ctx.GetPlayerMoney();
 		}
 	}
 }

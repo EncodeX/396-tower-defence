@@ -7,6 +7,7 @@ namespace Code {
         
         private Transform _head;
         private Transform _gun;
+        public bool canShoot = true;
 
         public GameObject Initialize(int row, int col) {
             Cost = 100;
@@ -45,8 +46,8 @@ namespace Code {
             if (closestEnemy != null) {
                 Vector3 relativePos = closestEnemy.transform.position - _head.position;
                 _head.transform.rotation = Quaternion.LookRotation(relativePos);
-
-                Shoot();
+                if(canShoot)
+                    Shoot();
             }
         }
 

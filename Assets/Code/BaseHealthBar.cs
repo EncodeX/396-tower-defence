@@ -5,6 +5,7 @@ namespace Code {
     public class BaseHealthBar : MonoBehaviour {
         private RectTransform _baseHealthBarRect;
         private Slider _slider;
+        private bool losing = false;
 
         // Use this for initialization
         void Start() {
@@ -25,10 +26,16 @@ namespace Code {
         public void PerformDamage(float points) {
             if (_slider.value - points < 0) {
                 _slider.value = 0;
+                losing = true;
             }
             else {
                 _slider.value -= points;
             }
+        }
+
+        public bool lost()
+        {
+            return losing;
         }
     }
 }
