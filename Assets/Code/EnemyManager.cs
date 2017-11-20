@@ -46,7 +46,7 @@ namespace Code {
         public static float StrongEnemySpeed = 0.3f;
         public static float FastEnemySpeed = 1.0f;
         public static float FastEnemyHealthpoints = 30f;
-        public static float NormalEnemyHealthpoints = 50f;
+        public static float NormalEnemyHealthpoints = 500f;
         public static float StrongEnemyHealthpoints = 100f;
 
         private int normal;
