@@ -23,7 +23,7 @@ namespace Code {
 
         void Update()
         {
-            display = Game.Ctx.DisplayNotification();
+//            display = Game.Ctx.DisplayNotification();
             var height = Screen.height * .5f - 300;
             var width = Screen.width * .5f;
 
