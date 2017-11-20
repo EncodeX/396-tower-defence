@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace Code
                {"TowerC",200}
             };
 
-            public BuildMenu(Vector3 position, int row, int col)
+            public BuildMenu(Vector3 position, int row, int col, bool canBuildOnCell)
             {
                 if (Canvas != null)
                 {
@@ -22,38 +22,27 @@ namespace Code
                     Go.transform.position = position;
                     Row = row;
                     Col = col;
-                    InitializeButtons();
+                    InitializeButtons(canBuildOnCell);
                 }
             }
 
 
-            private void InitializeButtons()
+            private void InitializeButtons(bool canBuildOnCell)
             {
                 foreach (Button button in Go.GetComponentsInChildren<Button>())
                 {
                     switch (button.name)
                     {
                         case "ButtonTowerA":
-                            if (!Game.Ctx.PathCalculator.CalculateNewPath())
+                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"] || !canBuildOnCell)
                             {
-                                Game.Ctx.towerNotification = true;
                                 button.interactable = false;
                                 break;
                             }
-                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"])
-                            {
-                                Game.Ctx.towerNotification = true;
-                                button.interactable = false;                       
-                                break;
-                            }
-
                             button.onClick.AddListener(() => {
-                                Game.Ctx.LastTowerRow = Row;
-                                Game.Ctx.LastTowerCol = Col;
                                 Game.Ctx.CellManager.PlaceTower(Row, Col, CellManager.CellType.TowerA);
                                 Game.Ctx.UI.HideBuildMenu();
                             });
-                            
                             break;
                         case "ButtonTowerB":
                             button.interactable = false;

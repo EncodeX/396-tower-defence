@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,13 +9,16 @@ namespace Code {
         private readonly Object _strongEnemy;
         private readonly Object _fastEnemy;
         private readonly Transform _holder;
+        private readonly NavMeshAgent _agent;
+
+        private int _checkCanWalkNext;
+        private GameObject _selectedGo;
 
         //public static enemyManager eManager;
         private const float SpawnTime = 3f;
         private const int MaxEnemyCount = 8;
         private int waveNum = 1;
         private NavMeshPath path = new NavMeshPath();
-       // public NavMeshAgent spawnPosition;
 
         Dictionary<int, int> NormalInWaves = new Dictionary<int, int>(){
             {1,3},
@@ -46,22 +50,29 @@ namespace Code {
         public static float StrongEnemySpeed = 0.3f;
         public static float FastEnemySpeed = 1.0f;
         public static float FastEnemyHealthpoints = 30f;
-        public static float NormalEnemyHealthpoints = 50f;
+        public static float NormalEnemyHealthpoints = 600f;
         public static float StrongEnemyHealthpoints = 100f;
 
         private int normal;
         private int strong;
         private float waveOverTime = 0f;
 
-        public EnemyManager(Transform holder)
+        public EnemyManager(Transform holder, NavMeshAgent agent)
         {
         	_normalEnemy = Resources.Load("Normal_Enemy");
             _strongEnemy = Resources.Load("Strong_Enemy");
             _fastEnemy = Resources.Load("Fast_Enemy");
             _holder = holder;
+            _agent = agent;
         }
 
         public void Update() {
+            if (_checkCanWalkNext == 1) {
+                _checkCanWalkNext = 2;
+            }else if (_checkCanWalkNext == 2) {
+                CheckCanWalk();
+            }
+            
             if (waveNum > _waveTotalNum)
             {
                 IsGameOver = true;
@@ -104,7 +115,8 @@ namespace Code {
                     NormalEnemiesCount = NormalInWaves[waveNum];
                 inWave = false;
             }
-            //bool result = Canwalk(new Vector3(2.0f, 0.3f, 2.0f), new Vector3(-2.0f, 0.3f, -2.0f));
+//            bool result = Canwalk(new Vector3(2.0f, 0.3f, 2.0f), new Vector3(-2.0f, 0.3f, -2.0f));
+            //Debug.Log(result);
         }
 
         private void SpawnNormal() {
@@ -115,7 +127,7 @@ namespace Code {
                 return;
             }
 
-            Vector3 pos1 = new Vector3(2f, 0.3f, 2f);
+            Vector3 pos1 = new Vector3(2f, 0.2f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
             ForceSpawnNormal(pos1, rotation, NormalEnemySpeed, "NormalEnemy", NormalEnemyHealthpoints);
         }
@@ -167,14 +179,27 @@ namespace Code {
             enemy.Initialize(speed, type, healthpoints);
         }
 
-        // Function to determine if path is available toward the base
-        public bool Canwalk(Vector3 startPos, Vector3 endPos){
-            bool status = NavMesh.CalculatePath(startPos, endPos, NavMesh.AllAreas, path);
-            if ((!status) && (path.status != NavMeshPathStatus.PathComplete))
-                return false;
-            else
-                return true;
+        public void AskCanWalk(GameObject go) {
+            _selectedGo = go;
+            _selectedGo.GetComponent<NavMeshObstacle>().enabled = true;
+            _checkCanWalkNext = 1;
         }
+
+        private void CheckCanWalk() {
+            _checkCanWalkNext = 0;
+
+            bool pathFound = NavMesh.CalculatePath(
+                Game.Ctx.CellManager.SpawnPos,
+                Game.Ctx.CellManager.BasePos,
+                NavMesh.AllAreas,
+                path);
+            
+            GameObjectUtility.SetNavMeshArea(_selectedGo, NavMesh.GetAreaFromName("Walkable"));
+            Game.Ctx.UI.OnCanWalkResult(path.status == NavMeshPathStatus.PathComplete);
+            _selectedGo.GetComponent<NavMeshObstacle>().enabled = false;
+        }
+        
+        
 
         public bool IsOver()
         {

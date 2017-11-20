@@ -12,45 +12,36 @@ namespace Code {
         public UIManager UI;
         public CellManager CellManager;
         public Camera Camera;
-        public PathCalculator PathCalculator;
-        public Notification Notification;
+//        public Notification Notification;
 
         public GameObject GameOverPanel;
         public Text GameOverText;
 
-        //public myCalculatePath testmyCalculatePath;
-
-        private int _money = 200;
+        private int _money = 2000;
         private int _wave = 1;
         private bool over = false;
 
         public int LastTowerRow = 0;
         public int LastTowerCol = 0;
-        public bool towerNotification;
+//        public bool towerNotification;
 
         private void Start() {
             Ctx = this;
             BaseHealthBar = GameObject.Find("BaseHealthBar").GetComponent<BaseHealthBar>();
             Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
-            EnemyManager = new EnemyManager(GameObject.Find("Spawner").transform);
+            EnemyManager = new EnemyManager(
+                GameObject.Find("Spawner").transform,
+                GameObject.Find("Base").GetComponent<NavMeshAgent>());
             BulletManager = new BulletManager(GameObject.Find("Bullets").transform);
             UI = new UIManager();
             CellManager = new CellManager(GameObject.Find("Towers").transform);
-            PathCalculator = GameObject.Find("Spawner").GetComponent<PathCalculator>();
-            Notification = GameObject.Find("Canvas").GetComponent<Notification>();
 
             GameOverPanel.SetActive(false);
-
-            //testmyCalculatePath = new myCalculatePath();
-            towerNotification = false;
+            
+//            towerNotification = false;
         }
 
         private void Update() {
-            if (!Ctx.PathCalculator.CalculateNewPath())
-            {
-                Game.Ctx.towerNotification = true;
-                Ctx.CellManager.SellTower(LastTowerRow, LastTowerCol,1.0f);
-            }
 
             if (isOver())
             {
@@ -88,10 +79,10 @@ namespace Code {
             return EnemyManager.GetNormalNum();
         }
 
-        public bool DisplayNotification()
-        {
-            return towerNotification;
-        }
+//        public bool DisplayNotification()
+//        {
+//            return towerNotification;
+//        }
 
         public bool isOver()
         {
