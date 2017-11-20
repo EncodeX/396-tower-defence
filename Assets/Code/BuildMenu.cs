@@ -14,7 +14,7 @@ namespace Code
                {"TowerC",200}
             };
 
-            public BuildMenu(Vector3 position, int row, int col)
+            public BuildMenu(Vector3 position, int row, int col, bool canBuildOnCell)
             {
                 if (Canvas != null)
                 {
@@ -22,19 +22,19 @@ namespace Code
                     Go.transform.position = position;
                     Row = row;
                     Col = col;
-                    InitializeButtons();
+                    InitializeButtons(canBuildOnCell);
                 }
             }
 
 
-            private void InitializeButtons()
+            private void InitializeButtons(bool canBuildOnCell)
             {
                 foreach (Button button in Go.GetComponentsInChildren<Button>())
                 {
                     switch (button.name)
                     {
                         case "ButtonTowerA":
-                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"])
+                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"] || !canBuildOnCell)
                             {
                                 button.interactable = false;
                                 break;

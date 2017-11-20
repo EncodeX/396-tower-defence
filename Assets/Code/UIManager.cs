@@ -1,5 +1,7 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Code {
     public partial class UIManager {
@@ -11,11 +13,15 @@ namespace Code {
         private bool ShowingBuildMenu{ get { return _build != null && _build.Showing; } }
         private bool ShowingUpgradeMenu{ get { return _upgrade != null && _upgrade.Showing; } }
 
+        private Vector3 _selectedPos;
+        private int _selectedRow;
+        private int _selectedCol;
+
         public UIManager() {
             Canvas = GameObject.Find("Canvas").transform;
         }
 
-        public void ShowCellMenu(Vector3 position, int row, int col) {
+        public void ShowCellMenu(Vector3 position, int row, int col, GameObject go) {
             if (ShowingBuildMenu) {
                 HideBuildMenu();
                 return;
@@ -32,11 +38,19 @@ namespace Code {
                 ShowUpgradeMenu(position, row, col);
                 return;
             }
-            ShowBuildMenu(position, row, col);
+
+            _selectedPos = position;
+            _selectedCol = col;
+            _selectedRow = row;
+            Game.Ctx.EnemyManager.AskCanWalk(go);
         }
 
-        private void ShowBuildMenu(Vector3 position, int row, int col) {
-            _build = new BuildMenu(position, row, col);
+        public void OnCanWalkResult(bool canWalk) {
+            ShowBuildMenu(_selectedPos, _selectedRow, _selectedCol, canWalk);
+        }
+
+        private void ShowBuildMenu(Vector3 position, int row, int col, bool canBuildOnCell) {
+            _build = new BuildMenu(position, row, col, canBuildOnCell);
             _build.Show();
         }
 

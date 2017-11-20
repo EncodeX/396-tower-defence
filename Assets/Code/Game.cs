@@ -18,7 +18,7 @@ namespace Code {
 
         //public myCalculatePath testmyCalculatePath;
 
-        private int _money = 200;
+        private int _money = 2000;
         private int _wave = 1;
         private bool over = false;
 
@@ -26,7 +26,9 @@ namespace Code {
             Ctx = this;
             BaseHealthBar = GameObject.Find("BaseHealthBar").GetComponent<BaseHealthBar>();
             Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
-            EnemyManager = new EnemyManager(GameObject.Find("Spawner").transform);
+            EnemyManager = new EnemyManager(
+                GameObject.Find("Spawner").transform,
+                GameObject.Find("Base").GetComponent<NavMeshAgent>());
             BulletManager = new BulletManager(GameObject.Find("Bullets").transform);
             UI = new UIManager();
             CellManager = new CellManager(GameObject.Find("Towers").transform);

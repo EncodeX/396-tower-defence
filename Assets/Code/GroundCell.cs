@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
 namespace Code {
@@ -17,7 +19,8 @@ namespace Code {
                     Game.Ctx.UI.ShowCellMenu(
                         Game.Ctx.Camera.WorldToScreenPoint(new Vector3(transform.position.x, 0, transform.position.z)),
                         Mathf.RoundToInt(transform.position.x) + 2,
-                        Mathf.RoundToInt(transform.position.z) + 2);
+                        Mathf.RoundToInt(transform.position.z) + 2,
+                        gameObject);
                 }
             }
         }

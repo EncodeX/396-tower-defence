@@ -10,6 +10,9 @@ namespace Code {
             Base,
             EnemySpawn
         }
+        
+        public Vector3 SpawnPos = new Vector3(2f, 0.3f, 2f);
+        public Vector3 BasePos = new Vector3(-2f, 0.3f, -2f);
 
         private readonly int[][] _towerMap;
         private readonly Object _towerTypeA;

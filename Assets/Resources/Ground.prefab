@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114358550134852942}
   - component: {fileID: 23728526082596950}
   - component: {fileID: 33181226788714048}
+  - component: {fileID: 208360464287588248}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -105,3 +106,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31b37526dea453c9f82e69deaba2175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &208360464287588248
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1506758191570120}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -1}
+  m_TimeToStationary: 0.5
