@@ -6,7 +6,7 @@ namespace Code {
         private float _healthpoints;
         private string _type;
         private static int _value = 20;
-        public Vector3 goal = new Vector3(-2f,0.3f,-2f);
+        public Vector3 goal = new Vector3(-2f,0f,-2f);
         private NavMeshAgent _agent;
 
         public void Initialize(float speed, string type, float healthpoints) {

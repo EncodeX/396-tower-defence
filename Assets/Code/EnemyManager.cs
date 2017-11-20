@@ -115,7 +115,7 @@ namespace Code {
                 return;
             }
 
-            Vector3 pos1 = new Vector3(2f, 0.3f, 2f);
+            Vector3 pos1 = new Vector3(2f, 0.2f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
             ForceSpawnNormal(pos1, rotation, NormalEnemySpeed, "NormalEnemy", NormalEnemyHealthpoints);
         }
