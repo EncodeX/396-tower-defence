@@ -27,15 +27,10 @@ namespace Code
 
             if (navMeshPath.status != NavMeshPathStatus.PathComplete)
             {
-
-                //Game.Ctx.Notification.display = true;
-                //Game.Ctx.towerNotification = "Unable to build new tower: Blocking Path!";
                 return false;
             }
             else
             {
-                //for (int i = 0; i < navMeshPath.corners.Length - 1; i++)
-                //    Debug.DrawLine(navMeshPath.corners[i], navMeshPath.corners[i + 1], Color.red);
                 return true;
             }
         }

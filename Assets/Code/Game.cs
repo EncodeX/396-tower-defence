@@ -20,13 +20,13 @@ namespace Code {
 
         //public myCalculatePath testmyCalculatePath;
 
-        private int _money = 2000;
+        private int _money = 200;
         private int _wave = 1;
         private bool over = false;
 
         public int LastTowerRow = 0;
         public int LastTowerCol = 0;
-        public string towerNotification;
+        public bool towerNotification;
 
         private void Start() {
             Ctx = this;
@@ -42,6 +42,7 @@ namespace Code {
             GameOverPanel.SetActive(false);
 
             //testmyCalculatePath = new myCalculatePath();
+            towerNotification = false;
         }
 
         private void Update() {
@@ -85,7 +86,7 @@ namespace Code {
             return EnemyManager.GetNormalNum();
         }
 
-        public string DisplayNotification()
+        public bool DisplayNotification()
         {
             return towerNotification;
         }

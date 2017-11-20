@@ -16,29 +16,25 @@ namespace Code {
         {
             _notificationRect = GetComponent<RectTransform>();
             _notification = GetComponent<Text>();
-            _lastshow = Time.time - 0.2f;
+            _lastshow = Time.time - 1.0f;
             ShowTime = 1.0f;
             display = false;
         }
 
         void Update()
         {
+            display = Game.Ctx.DisplayNotification();
             var height = Screen.height * .5f - 300;
             var width = Screen.width * .5f;
+
             if (display)
             {
-                _lastshow = Time.time;
-                display = false;
-            }
-
-            if ((Time.time - _lastshow) < ShowTime)
-            {
-                _notificationRect.anchoredPosition = new Vector2(-width + 170, height);
-                _notification.text = "Warning:" + Game.Ctx.DisplayNotification();
+                _notificationRect.anchoredPosition = new Vector2(-width + 30, height);
+                _notification.text = "Warning: Unable to build tower";
             }
             else
             {
-                _notificationRect.anchoredPosition = new Vector2(-width + 170, height);
+                _notificationRect.anchoredPosition = new Vector2(-width + 30, height);
                 _notification.text = "";
             }
         }

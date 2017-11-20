@@ -36,15 +36,17 @@ namespace Code
                         case "ButtonTowerA":
                             if (!Game.Ctx.PathCalculator.CalculateNewPath())
                             {
+                                Game.Ctx.towerNotification = true;
                                 button.interactable = false;
                                 break;
                             }
                             if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"])
                             {
-
+                                Game.Ctx.towerNotification = true;
                                 button.interactable = false;                       
                                 break;
                             }
+
                             button.onClick.AddListener(() => {
                                 Game.Ctx.LastTowerRow = Row;
                                 Game.Ctx.LastTowerCol = Col;
