@@ -55,6 +55,7 @@ namespace Code {
         }
 
         private void HideBuildMenu() {
+            Game.Ctx.towerNotification = false;
             _build.Hide();
             _build = null;
         }

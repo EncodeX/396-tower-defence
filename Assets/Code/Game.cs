@@ -12,6 +12,8 @@ namespace Code {
         public UIManager UI;
         public CellManager CellManager;
         public Camera Camera;
+        public PathCalculator PathCalculator;
+        public Notification Notification;
 
         public GameObject GameOverPanel;
         public Text GameOverText;
@@ -21,6 +23,10 @@ namespace Code {
         private int _money = 2000;
         private int _wave = 1;
         private bool over = false;
+
+        public int LastTowerRow = 0;
+        public int LastTowerCol = 0;
+        public bool towerNotification;
 
         private void Start() {
             Ctx = this;
@@ -32,13 +38,22 @@ namespace Code {
             BulletManager = new BulletManager(GameObject.Find("Bullets").transform);
             UI = new UIManager();
             CellManager = new CellManager(GameObject.Find("Towers").transform);
+            PathCalculator = GameObject.Find("Spawner").GetComponent<PathCalculator>();
+            Notification = GameObject.Find("Canvas").GetComponent<Notification>();
 
             GameOverPanel.SetActive(false);
 
             //testmyCalculatePath = new myCalculatePath();
+            towerNotification = false;
         }
 
         private void Update() {
+            if (!Ctx.PathCalculator.CalculateNewPath())
+            {
+                Game.Ctx.towerNotification = true;
+                Ctx.CellManager.SellTower(LastTowerRow, LastTowerCol,1.0f);
+            }
+
             if (isOver())
             {
                 GameOverPanel.SetActive(true);
@@ -73,6 +88,11 @@ namespace Code {
         public int GetNormalCount()
         {
             return EnemyManager.GetNormalNum();
+        }
+
+        public bool DisplayNotification()
+        {
+            return towerNotification;
         }
 
         public bool isOver()
