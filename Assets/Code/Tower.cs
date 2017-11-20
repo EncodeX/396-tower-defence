@@ -21,7 +21,7 @@ namespace Code {
                     Game.Ctx.UI.ShowCellMenu(
                         Game.Ctx.Camera.WorldToScreenPoint(new Vector3(transform.position.x, 0, transform.position.z)),
                         (int) transform.position.x + 2,
-                        (int) transform.position.z + 2, 
+                        (int) transform.position.z + 2,
                         null);
                 }
             }
