@@ -34,15 +34,24 @@ namespace Code
                     switch (button.name)
                     {
                         case "ButtonTowerA":
-                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"])
+                            if (!Game.Ctx.PathCalculator.CalculateNewPath())
                             {
                                 button.interactable = false;
                                 break;
                             }
+                            if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerA"])
+                            {
+
+                                button.interactable = false;                       
+                                break;
+                            }
                             button.onClick.AddListener(() => {
+                                Game.Ctx.LastTowerRow = Row;
+                                Game.Ctx.LastTowerCol = Col;
                                 Game.Ctx.CellManager.PlaceTower(Row, Col, CellManager.CellType.TowerA);
                                 Game.Ctx.UI.HideBuildMenu();
                             });
+                            
                             break;
                         case "ButtonTowerB":
                             button.interactable = false;

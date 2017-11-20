@@ -22,7 +22,7 @@ namespace Code {
                             break;
                         case "SellButton":
                             button.onClick.AddListener(() => {
-                                Game.Ctx.CellManager.SellTower(Row, Col);
+                                Game.Ctx.CellManager.SellTower(Row, Col,0.9f);
                                 Game.Ctx.UI.HideUpgradeMenu();
                             });
                             break;

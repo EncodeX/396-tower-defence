@@ -14,6 +14,7 @@ namespace Code {
         private const int MaxEnemyCount = 8;
         private int waveNum = 1;
         private NavMeshPath path = new NavMeshPath();
+       // public NavMeshAgent spawnPosition;
 
         Dictionary<int, int> NormalInWaves = new Dictionary<int, int>(){
             {1,3},
@@ -45,7 +46,7 @@ namespace Code {
         public static float StrongEnemySpeed = 0.3f;
         public static float FastEnemySpeed = 1.0f;
         public static float FastEnemyHealthpoints = 30f;
-        public static float NormalEnemyHealthpoints = 600f;
+        public static float NormalEnemyHealthpoints = 50f;
         public static float StrongEnemyHealthpoints = 100f;
 
         private int normal;
@@ -103,8 +104,7 @@ namespace Code {
                     NormalEnemiesCount = NormalInWaves[waveNum];
                 inWave = false;
             }
-            bool result = Canwalk(new Vector3(2.0f, 0.3f, 2.0f), new Vector3(-2.0f, 0.3f, -2.0f));
-            //Debug.Log(result);
+            //bool result = Canwalk(new Vector3(2.0f, 0.3f, 2.0f), new Vector3(-2.0f, 0.3f, -2.0f));
         }
 
         private void SpawnNormal() {
@@ -167,9 +167,9 @@ namespace Code {
             enemy.Initialize(speed, type, healthpoints);
         }
 
+        // Function to determine if path is available toward the base
         public bool Canwalk(Vector3 startPos, Vector3 endPos){
             bool status = NavMesh.CalculatePath(startPos, endPos, NavMesh.AllAreas, path);
-            //Debug.Log(status);
             if ((!status) && (path.status != NavMeshPathStatus.PathComplete))
                 return false;
             else

@@ -48,13 +48,13 @@ namespace Code {
             return _towerMap[row][col];
         }
 
-        public void SellTower(int row, int col) {
+        public void SellTower(int row, int col, float ratio) {
             switch (_towerMap[row][col]) {
                 case (int)CellType.TowerA:
                     TowerTypeA[] towers = _holder.GetComponentsInChildren<TowerTypeA>();
                     foreach (TowerTypeA tower in towers) {
                         if (tower.Row == row && tower.Col == col) {
-                            Game.Ctx.AddMoney((int)(.9f * tower.Cost));
+                            Game.Ctx.AddMoney((int)(ratio * tower.Cost));
                             GameObject.Destroy(tower.gameObject);
                             break;
                         }
