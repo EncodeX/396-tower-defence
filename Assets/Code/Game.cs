@@ -48,8 +48,10 @@ namespace Code {
         private void Update() {
             if (!Ctx.PathCalculator.CalculateNewPath())
             {
+                Game.Ctx.towerNotification = true;
                 Ctx.CellManager.SellTower(LastTowerRow, LastTowerCol,1.0f);
             }
+
             if (isOver())
             {
                 GameOverPanel.SetActive(true);

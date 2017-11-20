@@ -17,7 +17,7 @@ namespace Code {
             _notificationRect = GetComponent<RectTransform>();
             _notification = GetComponent<Text>();
             _lastshow = Time.time - 1.0f;
-            ShowTime = 1.0f;
+            ShowTime = 0.5f;
             display = false;
         }
 
@@ -28,6 +28,11 @@ namespace Code {
             var width = Screen.width * .5f;
 
             if (display)
+            {
+                _lastshow = Time.time;
+            }
+            
+            if((Time.time - _lastshow) < ShowTime)
             {
                 _notificationRect.anchoredPosition = new Vector2(-width + 30, height);
                 _notification.text = "Warning: Unable to build tower";
