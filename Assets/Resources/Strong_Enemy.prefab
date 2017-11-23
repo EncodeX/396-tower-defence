@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23875837181795980}
   - component: {fileID: 54834162185554534}
   - component: {fileID: 195105011966987176}
-  - component: {fileID: 114979297922201042}
+  - component: {fileID: 114391764003542746}
   m_Layer: 0
   m_Name: Strong_Enemy
   m_TagString: Untagged
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114979297922201042
+--- !u!114 &114391764003542746
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,10 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1362134810369066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e28809b217f60b74cb1d6c1eddd316a5, type: 3}
+  m_Script: {fileID: 11500000, guid: c254c1b7a3cf69a4daf9ff92419fdb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {x: -2, y: 0, z: -2}
+  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136261461504507282
 CapsuleCollider:
   m_ObjectHideFlags: 1

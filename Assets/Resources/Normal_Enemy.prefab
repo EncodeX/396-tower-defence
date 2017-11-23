@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 136015926866410658}
   - component: {fileID: 23391181656847698}
   - component: {fileID: 54399143155183840}
-  - component: {fileID: 114760862453860720}
   - component: {fileID: 195096535361994144}
+  - component: {fileID: 114343287931141638}
   m_Layer: 0
   m_Name: Normal_Enemy
   m_TagString: Untagged
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114760862453860720
+--- !u!114 &114343287931141638
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,10 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1488416243352850}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb3fbfcc67579d47b32caa223ee4a4e, type: 3}
+  m_Script: {fileID: 11500000, guid: c254c1b7a3cf69a4daf9ff92419fdb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {x: -2, y: 0.3, z: -2}
+  goal: {x: -2, y: 0, z: -2}
+  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136015926866410658
 CapsuleCollider:
   m_ObjectHideFlags: 1

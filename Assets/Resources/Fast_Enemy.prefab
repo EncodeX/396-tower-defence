@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 136020487463080812}
   - component: {fileID: 23306902213220878}
   - component: {fileID: 54182169787140056}
-  - component: {fileID: 114322490117808778}
   - component: {fileID: 195565623433029954}
+  - component: {fileID: 114094788643891394}
   m_Layer: 0
   m_Name: Fast_Enemy
   m_TagString: Untagged
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114322490117808778
+--- !u!114 &114094788643891394
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -107,10 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637235655093196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb3fbfcc67579d47b32caa223ee4a4e, type: 3}
+  m_Script: {fileID: 11500000, guid: c254c1b7a3cf69a4daf9ff92419fdb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goal: {x: -2, y: 0, z: -2}
+  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136020487463080812
 CapsuleCollider:
   m_ObjectHideFlags: 1

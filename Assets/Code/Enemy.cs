@@ -12,7 +12,9 @@ namespace Code
         private float originalSpeed;
         private int chainNo = 0;
 
-		public void Initialize(float speed, float healthpoints, int enemyvalue)
+        public Material mat;
+
+        public void Initialize(float speed, float healthpoints, int enemyvalue)
 		{
 			var rb = GetComponent<Rigidbody>();
 			//rb.velocity = speed;
@@ -99,6 +101,9 @@ namespace Code
 				{
 					damage += 0.1f;
                     chainNo = 1;
+
+                    DrawLine(transform.position, t.transform.position);
+
                     break;
 				}
 
@@ -111,7 +116,9 @@ namespace Code
 					{
                         if(chainNo == 0 || e.chainNo < chainNo)
 						    chainNo = e.chainNo;
-					}	
+
+                        DrawLine(transform.position, e.transform.position);
+                    }	
 				}
             }
 
@@ -122,7 +129,25 @@ namespace Code
             return damage;
 		}
 
-	}
+        void DrawLine(Vector3 startVertex, Vector3 endVertex)
+        {
+            if (!mat)
+            {
+                Debug.LogError("Please Assign a material on the inspector");
+                return;
+            }
+            GL.PushMatrix();
+            mat.SetPass(0);
+            GL.LoadOrtho();
+            GL.Begin(GL.LINES);
+            GL.Color(Color.red);
+            GL.Vertex(startVertex);
+            GL.Vertex(endVertex);
+            GL.End();
+            GL.PopMatrix();
+        }
+
+    }
 
 
 }
