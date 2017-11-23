@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 208641654329503652}
   - component: {fileID: 54354092086685540}
   - component: {fileID: 23479829657241700}
-  - component: {fileID: 114069989725821032}
+  - component: {fileID: 114170753435461518}
   m_Layer: 0
   m_Name: Freeze_Tower
   m_TagString: Untagged
@@ -257,7 +257,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114069989725821032
+--- !u!114 &114170753435461518
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1737769208700434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02ac533fba8b24407bd6aaafa3baea1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b87aee633f33f94aaab5978a0af292c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
