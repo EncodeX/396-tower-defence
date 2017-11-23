@@ -10,6 +10,7 @@ namespace Code
 		public Vector3 goal = new Vector3(-2f, 0f, -2f);
 		private NavMeshAgent _agent;
         private float originalSpeed;
+        private int chainNo = 0;
 
 		public void Initialize(float speed, float healthpoints, int enemyvalue)
 		{
@@ -31,7 +32,7 @@ namespace Code
 
         private void Update()
         {
-            Freezing();
+            PerformDamage(Freezing() + Shocking()); 
         }
 
 
@@ -62,7 +63,7 @@ namespace Code
 			}
 		}
 
-        public void Freezing()
+        public float Freezing()
         {
             var myPositionX = Mathf.RoundToInt(this.transform.position.x);
             var myPositionY = Mathf.RoundToInt(this.transform.position.y);
@@ -70,20 +71,56 @@ namespace Code
             var posPoint = new Vector3(myPositionX, myPositionY, myPositionZ);
             float speedRatio = 1.0f;
             float damage = 0.0f;
-            foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
-            {
-                var towerPosition = t.transform.position;
-                var direction = (posPoint - towerPosition);
-                var distance = direction.magnitude;
-
-                if(distance <= 1.5f)
-                {
-                    speedRatio = speedRatio * 0.6f;
-                    damage += 0.1f;
-                }
-            }
+			foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
+			{
+				var towerPosition = t.transform.position;
+				if (Mathf.Abs(myPositionX - towerPosition.x) < 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) < 1.0)
+				{
+					speedRatio = speedRatio * 0.6f;
+					damage += 0.1f;
+				}
+			}
             _agent.speed = originalSpeed * speedRatio;
-            PerformDamage(damage);
+            return damage;
         }
+
+        public float Shocking()
+		{
+			var myPositionX = Mathf.RoundToInt(this.transform.position.x);
+			var myPositionY = Mathf.RoundToInt(this.transform.position.y);
+			var myPositionZ = Mathf.RoundToInt(this.transform.position.z);
+			float damage = 0.0f;
+            chainNo = 0;
+			foreach (TowerTypeC t in FindObjectsOfType<TowerTypeC>())
+			{
+				var towerPosition = t.transform.position;
+                if (Mathf.Abs(myPositionX-towerPosition.x) < 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) < 1.0)
+				{
+					damage += 0.1f;
+                    chainNo = 1;
+                    break;
+				}
+
+			}
+            if(chainNo == 0){
+                foreach (Enemy e in FindObjectsOfType<Enemy>())
+				{
+					var enemyPosition = e.transform.position;
+                    if (Mathf.Abs(myPositionX - enemyPosition.x) < 1.0 && Mathf.Abs(myPositionZ - enemyPosition.z) < 1.0 && e.chainNo > 0 && e.chainNo < 3)
+					{
+                        if(chainNo == 0 || e.chainNo < chainNo)
+						    chainNo = e.chainNo;
+					}	
+				}
+            }
+            if (chainNo > 0)
+                damage = 0.1f;
+            else
+                damage = 0.0f;
+            return damage;
+		}
+
 	}
+
+
 }
