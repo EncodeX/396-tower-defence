@@ -23,12 +23,26 @@ namespace Code {
         Dictionary<int, int> NormalInWaves = new Dictionary<int, int>(){
             {1,3},
             {2,5},
-            {3,7}
+            {3,7},
+            {4,10},
+            {5,12},
+            {6,15},
+            {7,20},
+            {8,25},
+            {9,30},
+            {10,40},
         };
         Dictionary<int, int> StrongInWaves = new Dictionary<int, int>(){
             {1,0},
             {2,1},
-            {3,2}
+            {3,2},
+            {4,3},
+            {5,5},
+            {6,7},
+            {7,8},
+            {8,10},
+            {9,12},
+            {10,15},
         };
         Dictionary<int, float> timeOut = new Dictionary<int, float>(){
             {0,5f},
