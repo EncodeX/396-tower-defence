@@ -17,7 +17,7 @@ namespace Code {
         public GameObject GameOverPanel;
         public Text GameOverText;
 
-        private int _money = 200;
+        private int _money = 2000;
         private int _wave = 1;
         private bool over = false;
 
