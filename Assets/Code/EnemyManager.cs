@@ -50,7 +50,7 @@ namespace Code {
         public static float StrongEnemySpeed = 0.3f;
         public static float FastEnemySpeed = 1.0f;
         public static float FastEnemyHealthpoints = 30f;
-        public static float NormalEnemyHealthpoints = 600f;
+        public static float NormalEnemyHealthpoints = 50f;
         public static float StrongEnemyHealthpoints = 100f;
 
         private int normal;
@@ -181,12 +181,19 @@ namespace Code {
 
         public void AskCanWalk(GameObject go) {
             _selectedGo = go;
-            _selectedGo.GetComponent<NavMeshObstacle>().enabled = true;
+            if (_selectedGo != null) {
+                _selectedGo.GetComponent<NavMeshObstacle>().enabled = true;
+            }
             _checkCanWalkNext = 1;
         }
 
         private void CheckCanWalk() {
             _checkCanWalkNext = 0;
+
+            if (_selectedGo == null) {
+                Game.Ctx.UI.OnCanWalkResult(false);
+                return;
+            }
 
             bool pathFound = NavMesh.CalculatePath(
                 Game.Ctx.CellManager.SpawnPos,
