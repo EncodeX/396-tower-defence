@@ -55,5 +55,31 @@ namespace Code
 				Die();
 			}
 		}
+
+        public void Freezing()
+        {
+            var myPositionX = Mathf.RoundToInt(this.transform.position.x);
+            var myPositionY = Mathf.RoundToInt(this.transform.position.y);
+            var myPositionZ = Mathf.RoundToInt(this.transform.position.z);
+            var posPoint = new Vector3(myPositionX, myPositionY, myPositionZ);
+            float speedRatio = 1.0f;
+            float damage = 0.0f;
+            foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
+            {
+                var towerPosition = t.transform.position;
+                var direction = (posPoint - towerPosition);
+                var distance = direction.magnitude;
+
+                if(distance <= 1.0f)
+                {
+                    speedRatio = speedRatio * 0.9f;
+                    damage += 1.0f;
+                }
+            }
+
+            var spd = _agent.speed;
+            _agent.speed = spd * speedRatio;
+            PerformDamage(damage);
+        }
 	}
 }
