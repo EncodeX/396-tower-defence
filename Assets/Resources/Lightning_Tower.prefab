@@ -73,11 +73,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4288807370625628}
-  - component: {fileID: 114117378040827996}
   - component: {fileID: 65976633279363974}
   - component: {fileID: 208433675950605500}
   - component: {fileID: 54634535319134730}
   - component: {fileID: 23335982321075546}
+  - component: {fileID: 114100676943244364}
   m_Layer: 0
   m_Name: Lightning_Tower
   m_TagString: Untagged
@@ -316,7 +316,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.9, z: 0.7}
   m_Center: {x: 0, y: 0.45, z: 0}
---- !u!114 &114117378040827996
+--- !u!114 &114100676943244364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -324,13 +324,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1906142443062988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0a740fab5a64bbdb930d8d4c058309, type: 3}
+  m_Script: {fileID: 11500000, guid: b0d55c6e7cc1a4312a5ab98000874abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
   Row: 0
   Col: 0
-  canShoot: 1
 --- !u!135 &135203143032904434
 SphereCollider:
   m_ObjectHideFlags: 1

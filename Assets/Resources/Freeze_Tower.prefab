@@ -55,11 +55,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4309548506983476}
-  - component: {fileID: 114695736343006184}
   - component: {fileID: 65723530548165990}
   - component: {fileID: 208641654329503652}
   - component: {fileID: 54354092086685540}
   - component: {fileID: 23479829657241700}
+  - component: {fileID: 114069989725821032}
   m_Layer: 0
   m_Name: Freeze_Tower
   m_TagString: Untagged
@@ -257,7 +257,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114695736343006184
+--- !u!114 &114069989725821032
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -265,13 +265,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1737769208700434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0a740fab5a64bbdb930d8d4c058309, type: 3}
+  m_Script: {fileID: 11500000, guid: 02ac533fba8b24407bd6aaafa3baea1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 0
   Row: 0
   Col: 0
-  canShoot: 1
 --- !u!136 &136744544713356884
 CapsuleCollider:
   m_ObjectHideFlags: 1
