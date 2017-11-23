@@ -167,7 +167,7 @@ namespace Code {
             GameObject GameObj;
             GameObj = (GameObject) Object.Instantiate(_normalEnemy, pos, rotation, _holder);
             enemy = GameObj.GetComponent<NormalEnemy>();
-            enemy.Initialize(speed, type, healthpoints);
+            enemy.Initialize(speed, type, healthpoints,20);
         }
 
         public void ForceSpawnStrong(Vector3 pos, Quaternion rotation, float speed, string type, float healthpoints)
@@ -176,7 +176,7 @@ namespace Code {
             GameObject GameObj;
             GameObj = (GameObject)Object.Instantiate(_strongEnemy, pos, rotation, _holder);
             enemy = GameObj.GetComponent<StrongEnemy>();
-            enemy.Initialize(speed, type, healthpoints);
+            enemy.Initialize(speed, type, healthpoints,20);
         }
 
         public void AskCanWalk(GameObject go) {

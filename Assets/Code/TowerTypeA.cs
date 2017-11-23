@@ -33,8 +33,8 @@ namespace Code {
 
         // Update is called once per frame
         void Update() {
-            NormalEnemy closestEnemy = null;
-            foreach (NormalEnemy enemy in FindObjectsOfType<NormalEnemy>()) {
+            Enemy closestEnemy = null;
+            foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
                 if (closestEnemy == null) {
                     closestEnemy = enemy;
                 }

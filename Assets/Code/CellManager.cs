@@ -16,6 +16,8 @@ namespace Code {
 
         private readonly int[][] _towerMap;
         private readonly Object _towerTypeA;
+        private readonly Object _towerTypeB;
+        private readonly Object _towerTypeC;
         private readonly Transform _holder;
 
         public CellManager(Transform holder) {
@@ -30,19 +32,27 @@ namespace Code {
             _towerMap[4][4] = (int) CellType.EnemySpawn;
             _holder = holder;
             _towerTypeA = Resources.Load("TowerTypeA");
+            _towerTypeB = Resources.Load("Freeze_Tower");
+            _towerTypeC = Resources.Load("Lightning_Tower");
         }
 
         public void PlaceTower(int row, int col, CellType type) {
             _towerMap[row][col] = (int) type;
             switch (type) {
                 case CellType.TowerA:
-                    var gameObject = ((GameObject) Object.Instantiate(_towerTypeA, new Vector3(row - 2, 0, col - 2),
+                    var gameObjectA = ((GameObject) Object.Instantiate(_towerTypeA, new Vector3(row - 2, 0, col - 2),
                         new Quaternion(), _holder)).GetComponent<TowerTypeA>().Initialize(row, col);
-                    Game.Ctx.AddMoney(-gameObject.GetComponent<TowerTypeA>().Cost);
+                    Game.Ctx.AddMoney(-gameObjectA.GetComponent<TowerTypeA>().Cost);
                     break;
                 case CellType.TowerB:
+					var gameObjectB = ((GameObject)Object.Instantiate(_towerTypeB, new Vector3(row - 2, 0, col - 2),
+						new Quaternion(), _holder)).GetComponent<TowerTypeB>().Initialize(row, col);
+					Game.Ctx.AddMoney(-gameObjectB.GetComponent<TowerTypeB>().Cost);
                     break;
                 case CellType.TowerC:
+					var gameObjectC = ((GameObject)Object.Instantiate(_towerTypeC, new Vector3(row - 2, 0, col - 2),
+						new Quaternion(), _holder)).GetComponent<TowerTypeC>().Initialize(row, col);
+					Game.Ctx.AddMoney(-gameObjectC.GetComponent<TowerTypeC>().Cost);
                     break;
             }
         }
@@ -54,8 +64,8 @@ namespace Code {
         public void SellTower(int row, int col, float ratio) {
             switch (_towerMap[row][col]) {
                 case (int)CellType.TowerA:
-                    TowerTypeA[] towers = _holder.GetComponentsInChildren<TowerTypeA>();
-                    foreach (TowerTypeA tower in towers) {
+                    TowerTypeA[] towerAs = _holder.GetComponentsInChildren<TowerTypeA>();
+                    foreach (TowerTypeA tower in towerAs) {
                         if (tower.Row == row && tower.Col == col) {
                             Game.Ctx.AddMoney((int)(ratio * tower.Cost));
                             GameObject.Destroy(tower.gameObject);
@@ -64,8 +74,28 @@ namespace Code {
                     }
                     break;
                 case (int)CellType.TowerB:
+					TowerTypeB[] towerBs = _holder.GetComponentsInChildren<TowerTypeB>();
+					foreach (TowerTypeB tower in towerBs)
+					{
+						if (tower.Row == row && tower.Col == col)
+						{
+							Game.Ctx.AddMoney((int)(ratio * tower.Cost));
+							GameObject.Destroy(tower.gameObject);
+							break;
+						}
+					}
                     break;
                 case (int)CellType.TowerC:
+					TowerTypeC[] towerCs = _holder.GetComponentsInChildren<TowerTypeC>();
+					foreach (TowerTypeC tower in towerCs)
+					{
+						if (tower.Row == row && tower.Col == col)
+						{
+							Game.Ctx.AddMoney((int)(ratio * tower.Cost));
+							GameObject.Destroy(tower.gameObject);
+							break;
+						}
+					}
                     break;
             }
             _towerMap[row][col] = (int) CellType.Empty;

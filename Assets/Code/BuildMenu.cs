@@ -45,10 +45,26 @@ namespace Code
                             });
                             break;
                         case "ButtonTowerB":
-                            button.interactable = false;
+							if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerB"] || !canBuildOnCell)
+							{
+								button.interactable = false;
+								break;
+							}
+							button.onClick.AddListener(() => {
+								Game.Ctx.CellManager.PlaceTower(Row, Col, CellManager.CellType.TowerB);
+								Game.Ctx.UI.HideBuildMenu();
+							});
                             break;
                         case "ButtonTowerC":
-                            button.interactable = false;
+							if (Game.Ctx.GetPlayerMoney() < TowerCost["TowerC"] || !canBuildOnCell)
+							{
+								button.interactable = false;
+								break;
+							}
+							button.onClick.AddListener(() => {
+								Game.Ctx.CellManager.PlaceTower(Row, Col, CellManager.CellType.TowerC);
+								Game.Ctx.UI.HideBuildMenu();
+							});
                             break;
                     }
                 }

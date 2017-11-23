@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Code
 {
-	public class TowerTypeB : Tower
+	public class TowerTypeC : Tower
 	{
 
 		public GameObject Initialize(int row, int col)
@@ -13,6 +13,6 @@ namespace Code
 			return gameObject;
 		}
 
-		
+
 	}
 }
