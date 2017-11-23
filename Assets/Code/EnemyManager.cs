@@ -21,40 +21,40 @@ namespace Code {
         private NavMeshPath path = new NavMeshPath();
 
         Dictionary<int, int> NormalInWaves = new Dictionary<int, int>(){
-            {1,3},
-            {2,5},
-            {3,7},
+            {1,5},
+            {2,10},
+            {3,10},
             {4,10},
-            {5,12},
-            {6,15},
-            {7,20},
-            {8,25},
-            {9,30},
-            {10,40}
-        };
-        Dictionary<int, int> StrongInWaves = new Dictionary<int, int>(){
-            {1,0},
-            {2,1},
-            {3,2},
-            {4,3},
-            {5,5},
-            {6,7},
-            {7,8},
-            {8,10},
-            {9,12},
-            {10,15}
-        };
-        Dictionary<int, int> FastInWaves = new Dictionary<int, int>(){
-            {1,0},
-            {2,1},
-            {3,3},
-            {4,5},
-            {5,8},
+            {5,20},
             {6,10},
-            {7,12},
+            {7,15},
             {8,15},
             {9,20},
             {10,20}
+        };
+        Dictionary<int, int> StrongInWaves = new Dictionary<int, int>(){
+            {1,0},
+            {2,0},
+            {3,0},
+            {4,2},
+            {5,4},
+            {6,4},
+            {7,6},
+            {8,6},
+            {9,8},
+            {10,10}
+        };
+        Dictionary<int, int> FastInWaves = new Dictionary<int, int>(){
+            {1,0},
+            {2,0},
+            {3,5},
+            {4,0},
+            {5,0},
+            {6,10},
+            {7,10},
+            {8,12},
+            {9,12},
+            {10,15}
         };
         Dictionary<int, float> timeOut = new Dictionary<int, float>(){
             {0,5f},
@@ -70,24 +70,26 @@ namespace Code {
             {10,30f},
         };
 
-        private int NormalEnemiesCount = 3;
+        private int NormalEnemiesCount = 5;
         private int StrongEnemiesCount = 0;
+        private int FastEnemiesCount = 0;
         private float _lastspawn = Time.time - SpawnTime;
         private float _waveover = 5f;
         private float timeLeft = 0f;
         private bool inWave = false;
         private bool IsGameOver = false;
-        private int _waveTotalNum = 3;
+        private int _waveTotalNum = 10;
 
         public static float NormalEnemySpeed = 0.5f;
         public static float StrongEnemySpeed = 0.3f;
         public static float FastEnemySpeed = 1.0f;
         public static float FastEnemyHealthpoints = 30f;
         public static float NormalEnemyHealthpoints = 50f;
-        public static float StrongEnemyHealthpoints = 100f;
+        public static float StrongEnemyHealthpoints = 70f;
 
         private int normal;
         private int strong;
+        private int fast;
         private float waveOverTime = 0f;
 
         public EnemyManager(Transform holder, NavMeshAgent agent)
@@ -119,7 +121,8 @@ namespace Code {
             if (!inWave)
             {
                 normal = NormalInWaves[waveNum];
-                //strong = StrongInWaves[waveNum];
+                strong = StrongInWaves[waveNum];
+                fast = FastInWaves[waveNum];
                 inWave = true;
                 timeLeft = 0;
             }
@@ -132,20 +135,30 @@ namespace Code {
                 normal--;
                 _lastspawn = Time.time;
             }
-            /*if (strong > 0)
+            if (strong > 0)
             {
                 SpawnStrong();
-                normal--;
+                strong--;
                 _lastspawn = Time.time;
-            }*/
+            }
+            if (fast > 0)
+            {
+                SpawnFast();
+                fast--;
+                _lastspawn = Time.time;
+            }
             //if(normal == 0 && strong == 0)
-            if (normal == 0 && Object.FindObjectsOfType<NormalEnemy>().Length == 0)
+            if (normal == 0 && Object.FindObjectsOfType<Enemy>().Length == 0 && strong == 0 && fast == 0)
             {
                 waveOverTime = Time.time;
                 _waveover = timeOut[waveNum];
                 waveNum++;
-                if(waveNum <= _waveTotalNum)
+                if (waveNum <= _waveTotalNum)
+                {
                     NormalEnemiesCount = NormalInWaves[waveNum];
+                    StrongEnemiesCount = StrongInWaves[waveNum];
+                    FastEnemiesCount = FastInWaves[waveNum];
+                }
                 inWave = false;
             }
 //            bool result = Canwalk(new Vector3(2.0f, 0.3f, 2.0f), new Vector3(-2.0f, 0.3f, -2.0f));
@@ -162,7 +175,7 @@ namespace Code {
 
             Vector3 pos1 = new Vector3(2f, 0.2f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
-            ForceSpawnNormal(pos1, rotation, NormalEnemySpeed, "NormalEnemy", NormalEnemyHealthpoints);
+            ForceSpawn(pos1, rotation, NormalEnemySpeed, "NormalEnemy", NormalEnemyHealthpoints);
         }
 
         private void SpawnStrong()
@@ -177,7 +190,22 @@ namespace Code {
             }
             Vector3 pos2 = new Vector3(1f, 0.3f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
-            ForceSpawnStrong(pos2, rotation, StrongEnemySpeed, "StrongEnemy", StrongEnemyHealthpoints);
+            ForceSpawn(pos2, rotation, StrongEnemySpeed, "StrongEnemy", StrongEnemyHealthpoints);
+        }
+
+        private void SpawnFast()
+        {
+            if (_holder == null)
+            {
+                Debug.Log("true");
+            }
+            if (_holder.childCount >= MaxEnemyCount)
+            {
+                return;
+            }
+            Vector3 pos3 = new Vector3(2f, 0.3f, 1f);
+            Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
+            ForceSpawn(pos3, rotation, FastEnemySpeed, "FastEnemy", FastEnemyHealthpoints);
         }
 
         public int GetWaveNum()
@@ -190,26 +218,39 @@ namespace Code {
             return NormalEnemiesCount;
         }
 
+        public int GetFastNum()
+        {
+            return FastEnemiesCount;
+        }
+
         public int GetStrongNum()
         {
             return StrongEnemiesCount;
         }
 
-        public void ForceSpawnNormal(Vector3 pos, Quaternion rotation, float speed, string type, float healthpoints) {
-            NormalEnemy enemy;
-            GameObject GameObj;
-            GameObj = (GameObject) Object.Instantiate(_normalEnemy, pos, rotation, _holder);
-            enemy = GameObj.GetComponent<NormalEnemy>();
-            enemy.Initialize(speed, type, healthpoints, 20);
-        }
-
-        public void ForceSpawnStrong(Vector3 pos, Quaternion rotation, float speed, string type, float healthpoints)
-        {
-            StrongEnemy enemy;
-            GameObject GameObj;
-            GameObj = (GameObject)Object.Instantiate(_strongEnemy, pos, rotation, _holder);
-            enemy = GameObj.GetComponent<StrongEnemy>();
-            enemy.Initialize(speed, type, healthpoints, 50);
+        public void ForceSpawn(Vector3 pos, Quaternion rotation, float speed, string type, float healthpoints) {
+            GameObject GameObj;      
+            if (type.Equals("NormalEnemy"))
+            {
+                GameObj = (GameObject)Object.Instantiate(_normalEnemy, pos, rotation, _holder);
+                Enemy e;
+                e = GameObj.GetComponent<Enemy>();
+                e.Initialize(speed, healthpoints, 20);
+            }
+            else if (type.Equals("StrongEnemy"))
+            {
+                GameObj = (GameObject) Object.Instantiate(_strongEnemy, pos, rotation, _holder);
+                Enemy e;
+                e = GameObj.GetComponent<Enemy>();
+                e.Initialize(speed, healthpoints, 50);
+            }
+            else if (type.Equals("FastEnemy"))
+            {
+                GameObj = (GameObject)Object.Instantiate(_fastEnemy, pos, rotation, _holder);
+                Enemy e;
+                e = GameObj.GetComponent<Enemy>();
+                e.Initialize(speed, healthpoints, 30);
+            }
         }
 
         public void AskCanWalk(GameObject go) {

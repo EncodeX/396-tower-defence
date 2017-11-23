@@ -79,10 +79,20 @@ namespace Code {
             return EnemyManager.GetNormalNum();
         }
 
-//        public bool DisplayNotification()
-//        {
-//            return towerNotification;
-//        }
+        public int GetStrongCount()
+        {
+            return EnemyManager.GetStrongNum();
+        }
+
+        public int GetFastCount()
+        {
+            return EnemyManager.GetFastNum();
+        }
+
+        //        public bool DisplayNotification()
+        //        {
+        //            return towerNotification;
+        //        }
 
         public bool isOver()
         {

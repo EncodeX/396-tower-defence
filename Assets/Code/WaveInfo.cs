@@ -25,7 +25,7 @@ namespace Code
             if (timeLeft > 0)
             {
                 _waveInfoRect.anchoredPosition = new Vector2(width + 300 * (1.0f / timeLeft), height + 300*(1.0f/timeLeft));
-                _waveInfo.text = "Wave: " + Game.Ctx.GetWave() + "\n" + "Normal Enemies: " + Game.Ctx.GetNormalCount() + "\nTime to Next Wave: " + timeLeft;
+                _waveInfo.text = "Wave: " + Game.Ctx.GetWave() + "\n" + "Normal Enemies: " + Game.Ctx.GetNormalCount() + "\n" + "Strong Enemies: " + Game.Ctx.GetStrongCount() + "\n" + "Fast Enemies: " + Game.Ctx.GetFastCount() + "\nTime to Next Wave: " + timeLeft;
             }
             else
             {
