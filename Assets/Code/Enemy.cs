@@ -76,7 +76,7 @@ namespace Code
 			foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
 			{
 				var towerPosition = t.transform.position;
-				if (Mathf.Abs(myPositionX - towerPosition.x) < 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) < 1.0)
+				if (Mathf.Abs(myPositionX - towerPosition.x) <= 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) <= 1.0)
 				{
 					speedRatio = speedRatio * 0.6f;
 					damage += 0.1f;
@@ -95,8 +95,9 @@ namespace Code
             chainNo = 0;
 			foreach (TowerTypeC t in FindObjectsOfType<TowerTypeC>())
 			{
-				var towerPosition = t.transform.position;
-                if (Mathf.Abs(myPositionX-towerPosition.x) < 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) < 1.0)
+                var towerPositionX = Mathf.RoundToInt(t.transform.position.x);
+                var towerPositionZ = Mathf.RoundToInt(t.transform.position.z);
+                if (Mathf.Abs(myPositionX-towerPositionX) <= 1.0 && Mathf.Abs(myPositionZ - towerPositionZ) <= 1.0)
 				{
 					damage += 0.1f;
                     chainNo = 1;
@@ -108,15 +109,16 @@ namespace Code
                 foreach (Enemy e in FindObjectsOfType<Enemy>())
 				{
 					var enemyPosition = e.transform.position;
-                    if (Mathf.Abs(myPositionX - enemyPosition.x) < 1.0 && Mathf.Abs(myPositionZ - enemyPosition.z) < 1.0 && e.chainNo > 0 && e.chainNo < 3)
+                    if (Mathf.Abs(myPositionX - enemyPosition.x) <= 1.0 && Mathf.Abs(myPositionZ - enemyPosition.z) <= 1.0 && e.chainNo > 0 && e.chainNo < 3)
 					{
                         if(chainNo == 0 || e.chainNo < chainNo)
 						    chainNo = e.chainNo;
 					}	
 				}
             }
+
             if (chainNo > 0)
-                damage = 0.1f;
+                damage = 0.1f; 
             else
                 damage = 0.0f;
             return damage;
