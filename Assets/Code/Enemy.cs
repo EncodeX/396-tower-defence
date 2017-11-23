@@ -10,6 +10,7 @@ namespace Code
 		private static int _value = 20;
 		public Vector3 goal = new Vector3(-2f, 0f, -2f);
 		private NavMeshAgent _agent;
+        private float originalSpeed;
 
 		public void Initialize(float speed, string type, float healthpoints, int enemyvalue)
 		{
@@ -18,19 +19,25 @@ namespace Code
 			_healthpoints = healthpoints;
 			_type = type;
 			_agent = GetComponent<NavMeshAgent>();
-			_agent.speed = speed;
+            originalSpeed = speed;
+            _agent.speed = speed;
 			_agent.SetDestination(goal);
             _value = enemyvalue;
 		}
 
-		//void Start()
-		//{
-		//agent = GetComponent<NavMeshAgent>();
-		//agent.SetDestination(goal);
-		//}
+        //void Start()
+        //{
+        //agent = GetComponent<NavMeshAgent>();
+        //agent.SetDestination(goal);
+        //}
+
+        private void Update()
+        {
+            Freezing();
+        }
 
 
-		internal void OnCollisionEnter(Collision other)
+        internal void OnCollisionEnter(Collision other)
 		{
 			if (other.gameObject.name == "Base")
 			{
@@ -40,6 +47,7 @@ namespace Code
 				Die();
 			}
 		}
+
 
 		private void Die()
 		{
@@ -70,15 +78,13 @@ namespace Code
                 var direction = (posPoint - towerPosition);
                 var distance = direction.magnitude;
 
-                if(distance <= 1.0f)
+                if(distance <= 1.5f)
                 {
-                    speedRatio = speedRatio * 0.9f;
-                    damage += 1.0f;
+                    speedRatio = speedRatio * 0.6f;
+                    damage += 0.1f;
                 }
             }
-
-            var spd = _agent.speed;
-            _agent.speed = spd * speedRatio;
+            _agent.speed = originalSpeed * speedRatio;
             PerformDamage(damage);
         }
 	}
