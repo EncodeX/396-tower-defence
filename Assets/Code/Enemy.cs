@@ -10,6 +10,7 @@ namespace Code
 		private static int _value = 20;
 		public Vector3 goal = new Vector3(-2f, 0f, -2f);
 		private NavMeshAgent _agent;
+        private float originalSpeed;
 
 		public void Initialize(float speed, string type, float healthpoints, int enemyvalue)
 		{
@@ -18,19 +19,25 @@ namespace Code
 			_healthpoints = healthpoints;
 			_type = type;
 			_agent = GetComponent<NavMeshAgent>();
-			_agent.speed = speed;
+            originalSpeed = speed;
+            _agent.speed = speed;
 			_agent.SetDestination(goal);
             _value = enemyvalue;
 		}
 
-		//void Start()
-		//{
-		//agent = GetComponent<NavMeshAgent>();
-		//agent.SetDestination(goal);
-		//}
+        //void Start()
+        //{
+        //agent = GetComponent<NavMeshAgent>();
+        //agent.SetDestination(goal);
+        //}
+
+        private void Update()
+        {
+            Freezing();
+        }
 
 
-		internal void OnCollisionEnter(Collision other)
+        internal void OnCollisionEnter(Collision other)
 		{
 			if (other.gameObject.name == "Base")
 			{
@@ -40,6 +47,7 @@ namespace Code
 				Die();
 			}
 		}
+
 
 		private void Die()
 		{
@@ -55,5 +63,29 @@ namespace Code
 				Die();
 			}
 		}
+
+        public void Freezing()
+        {
+            var myPositionX = Mathf.RoundToInt(this.transform.position.x);
+            var myPositionY = Mathf.RoundToInt(this.transform.position.y);
+            var myPositionZ = Mathf.RoundToInt(this.transform.position.z);
+            var posPoint = new Vector3(myPositionX, myPositionY, myPositionZ);
+            float speedRatio = 1.0f;
+            float damage = 0.0f;
+            foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
+            {
+                var towerPosition = t.transform.position;
+                var direction = (posPoint - towerPosition);
+                var distance = direction.magnitude;
+
+                if(distance <= 1.5f)
+                {
+                    speedRatio = speedRatio * 0.6f;
+                    damage += 0.1f;
+                }
+            }
+            _agent.speed = originalSpeed * speedRatio;
+            PerformDamage(damage);
+        }
 	}
 }
