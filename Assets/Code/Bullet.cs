@@ -19,7 +19,13 @@ namespace Code {
         private void OnCollisionEnter(Collision other) {
             switch (other.gameObject.name) {
                 case "Normal_Enemy(Clone)":
-                    other.gameObject.GetComponent<NormalEnemy>().PerformDamage(12.5f);
+                    other.gameObject.GetComponent<Enemy>().PerformDamage(12.5f);
+                    break;
+                case "Strong_Enemy(Clone)":
+                    other.gameObject.GetComponent<Enemy>().PerformDamage(12.5f);
+                    break;
+                case "Fast_Enemy(Clone)":
+                    other.gameObject.GetComponent<Enemy>().PerformDamage(12.5f);
                     break;
             }
             Die();

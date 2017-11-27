@@ -6,23 +6,30 @@ namespace Code
 	public class Enemy : MonoBehaviour
 	{
 		private float _healthpoints;
+		private float _fullHealthPoints;
 		private static int _value = 20;
-		public Vector3 goal = new Vector3(-2f, 0f, -2f);
+		public Vector3 Goal = new Vector3(-2f, 0f, -2f);
 		private NavMeshAgent _agent;
-        private float originalSpeed;
-        private int chainNo = 0;
+        private float _originalSpeed;
+		private bool _shocked;
+		private bool _frozen;
 
-        public Material mat;
+		public Material Mat;
+
+		private Enemy _targetEnemy;
+		private float _lightningDuration = .1f;
+		private float _lightningTime;
 
         public void Initialize(float speed, float healthpoints, int enemyvalue)
 		{
 			var rb = GetComponent<Rigidbody>();
 			//rb.velocity = speed;
 			_healthpoints = healthpoints;
+			_fullHealthPoints = healthpoints;
 			_agent = GetComponent<NavMeshAgent>();
-            originalSpeed = speed;
+            _originalSpeed = speed;
             _agent.speed = speed;
-			_agent.SetDestination(goal);
+			_agent.SetDestination(Goal);
             _value = enemyvalue;
 		}
 
@@ -34,9 +41,9 @@ namespace Code
 
         private void Update()
         {
-            PerformDamage(Freezing() + Shocking()); 
+//            PerformDamage(Freezing() + Shocking());
+	        Freezing();
         }
-
 
         internal void OnCollisionEnter(Collision other)
 		{
@@ -65,88 +72,138 @@ namespace Code
 			}
 		}
 
-        public float Freezing()
+        public void Freezing()
         {
-            var myPositionX = Mathf.RoundToInt(this.transform.position.x);
-            var myPositionY = Mathf.RoundToInt(this.transform.position.y);
-            var myPositionZ = Mathf.RoundToInt(this.transform.position.z);
-            var posPoint = new Vector3(myPositionX, myPositionY, myPositionZ);
+            var myPositionX = Mathf.RoundToInt(transform.position.x);
+            var myPositionZ = Mathf.RoundToInt(transform.position.z);
             float speedRatio = 1.0f;
-            float damage = 0.0f;
+	        _frozen = false;
 			foreach (TowerTypeB t in FindObjectsOfType<TowerTypeB>())
 			{
 				var towerPosition = t.transform.position;
 				if (Mathf.Abs(myPositionX - towerPosition.x) <= 1.0 && Mathf.Abs(myPositionZ - towerPosition.z) <= 1.0)
 				{
 					speedRatio = speedRatio * 0.6f;
-					damage += 0.1f;
+					_frozen = true;
 				}
 			}
-            _agent.speed = originalSpeed * speedRatio;
-            return damage;
+            _agent.speed = _originalSpeed * speedRatio;
         }
 
-        public float Shocking()
-		{
-			var myPositionX = Mathf.RoundToInt(this.transform.position.x);
-			var myPositionY = Mathf.RoundToInt(this.transform.position.y);
-			var myPositionZ = Mathf.RoundToInt(this.transform.position.z);
-			float damage = 0.0f;
-            chainNo = 0;
-			foreach (TowerTypeC t in FindObjectsOfType<TowerTypeC>())
-			{
-                var towerPositionX = Mathf.RoundToInt(t.transform.position.x);
-                var towerPositionZ = Mathf.RoundToInt(t.transform.position.z);
-                if (Mathf.Abs(myPositionX-towerPositionX) <= 1.0 && Mathf.Abs(myPositionZ - towerPositionZ) <= 1.0)
-				{
-					damage += 0.1f;
-                    chainNo = 1;
-
-                    DrawLine(transform.position, t.transform.position);
-
-                    break;
-				}
-
+		public void Shocked() {
+			foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
+				enemy._shocked = false;
 			}
-            if(chainNo == 0){
-                foreach (Enemy e in FindObjectsOfType<Enemy>())
-				{
-					var enemyPosition = e.transform.position;
-                    if (Mathf.Abs(myPositionX - enemyPosition.x) <= 1.0 && Mathf.Abs(myPositionZ - enemyPosition.z) <= 1.0 && e.chainNo > 0 && e.chainNo < 3)
-					{
-                        if(chainNo == 0 || e.chainNo < chainNo)
-						    chainNo = e.chainNo;
-
-                        DrawLine(transform.position, e.transform.position);
-                    }	
-				}
-            }
-
-            if (chainNo > 0)
-                damage = 0.1f; 
-            else
-                damage = 0.0f;
-            return damage;
+			
+			Shocking(3.0f);
 		}
 
-        void DrawLine(Vector3 startVertex, Vector3 endVertex)
-        {
-            if (!mat)
-            {
-                Debug.LogError("Please Assign a material on the inspector");
-                return;
-            }
-            GL.PushMatrix();
-            mat.SetPass(0);
-            GL.LoadOrtho();
-            GL.Begin(GL.LINES);
-            GL.Color(Color.red);
-            GL.Vertex(startVertex);
-            GL.Vertex(endVertex);
-            GL.End();
-            GL.PopMatrix();
+        public void Shocking(float damage) {
+	        if (_shocked) return;
+	        
+	        PerformDamage(damage);
+	        _shocked = true;
+
+	        Enemy closestEnemy = null;
+	        foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
+		        if (enemy._shocked) continue;
+		        
+		        if (closestEnemy == null) {
+			        closestEnemy = enemy;
+		        }
+		        if (Vector3.Distance(transform.position, enemy.transform.position) <=
+		            Vector3.Distance(transform.position, closestEnemy.transform.position)) {
+			        closestEnemy = enemy;
+		        }
+	        }
+	        if (closestEnemy != null && Vector3.Distance(transform.position, closestEnemy.transform.position) < 1f) {
+		        closestEnemy.Shocking(damage * .6f);
+		        _targetEnemy = closestEnemy;
+		        _lightningTime = Time.time + _lightningDuration;
+	        }
         }
 
+		private void OnGUI() {
+			Vector3 fromPos = Game.Ctx.Camera.WorldToScreenPoint(transform.position);
+			if (_targetEnemy != null && Time.time < _lightningTime) {
+				Vector3 toPos = Game.Ctx.Camera.WorldToScreenPoint(_targetEnemy.transform.position);
+				DrawLine(new Vector2(fromPos.x, fromPos.y), new Vector2(toPos.x, toPos.y));
+			}
+			
+			DrawHealthPoint(fromPos);
+
+			if (_frozen) {
+				DrawArrow(fromPos);
+			}
+		}
+
+		private void DrawLine(Vector3 startVertex, Vector3 endVertex)
+		{
+			if (!Mat)
+			{
+				Debug.LogError("Please Assign a material on the inspector");
+				return;
+			}
+			GL.PushMatrix();
+			Mat.SetPass(0);
+			GL.LoadPixelMatrix();
+			GL.Begin(GL.LINES);
+			GL.Color(Color.white);
+			GL.Vertex(startVertex);
+			GL.Vertex(endVertex);
+			GL.End();
+			GL.PopMatrix();
+		}
+
+		private void DrawHealthPoint(Vector2 center) {
+			if (!Mat)
+			{
+				Debug.LogError("Please Assign a material on the inspector");
+				return;
+			}
+			Vector2 barCenter = new Vector2(center.x, center.y + 30f);
+			
+			GL.PushMatrix();
+			Mat.SetPass(0);
+			GL.LoadPixelMatrix();
+			GL.Begin(GL.QUADS);
+			GL.Color(Color.white);
+			GL.Vertex(barCenter + new Vector2(-24f, -3f));
+			GL.Vertex(barCenter + new Vector2(24f, -3f));
+			GL.Vertex(barCenter + new Vector2(24f, 3f));
+			GL.Vertex(barCenter + new Vector2(-24f, 3f));
+			GL.End();
+			GL.Begin(GL.QUADS);
+			GL.Color(Color.red);
+			GL.Vertex(barCenter + new Vector2(-23f, -2f));
+			GL.Vertex(barCenter + new Vector2(-23f + 46f * _healthpoints / _fullHealthPoints, -2f));
+			GL.Vertex(barCenter + new Vector2(-23f + 46f * _healthpoints / _fullHealthPoints, 2f));
+			GL.Vertex(barCenter + new Vector2(-23f, 2f));
+			GL.End();
+			GL.PopMatrix();
+		}
+
+		private void DrawArrow(Vector2 center) {
+			Vector2 arrowStart = new Vector2(center.x + 35f, center.y + 29f);
+			
+			GL.PushMatrix();
+			Mat.SetPass(0);
+			GL.LoadPixelMatrix();
+			GL.Begin(GL.QUADS);
+			GL.Color(Color.blue);
+			GL.Vertex(arrowStart + new Vector2(2f, 7f));
+			GL.Vertex(arrowStart + new Vector2(-2f, 7f));
+			GL.Vertex(arrowStart + new Vector2(-2f, 0f));
+			GL.Vertex(arrowStart + new Vector2(2f, 0f));
+			GL.End();
+			GL.Begin(GL.TRIANGLES);
+			GL.Color(Color.blue);
+			GL.Vertex(arrowStart + new Vector2(5f, 0f));
+			GL.Vertex(arrowStart + new Vector2(-5f, 0f));
+			GL.Vertex(arrowStart + new Vector2(0f, -5f));
+			GL.End();
+			GL.PopMatrix();
+		}
     }
 
 

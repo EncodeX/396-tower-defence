@@ -31,7 +31,6 @@ namespace Code {
                 return;
             }
             var cellObj = Game.Ctx.CellManager.CheckCell(row, col);
-//            Debug.Log(cellObj);
             if (cellObj == (int) CellManager.CellType.Base || cellObj == (int) CellManager.CellType.EnemySpawn) {
                 return;
             }

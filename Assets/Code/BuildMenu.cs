@@ -10,8 +10,8 @@ namespace Code
         {
             Dictionary<string, int> TowerCost = new Dictionary<string, int>(){
                {"TowerA",100},
-               {"TowerB",150},
-               {"TowerC",200}
+               {"TowerB",100},
+               {"TowerC",100}
             };
 
             public BuildMenu(Vector3 position, int row, int col, bool canBuildOnCell)

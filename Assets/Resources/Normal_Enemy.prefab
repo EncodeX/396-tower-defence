@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54399143155183840}
   - component: {fileID: 195096535361994144}
   - component: {fileID: 114343287931141638}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Normal_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c254c1b7a3cf69a4daf9ff92419fdb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {x: -2, y: 0, z: -2}
+  Goal: {x: -2, y: 0, z: -2}
   mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136015926866410658
 CapsuleCollider:

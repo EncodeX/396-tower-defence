@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Code {
-    public class Tower : MonoBehaviour {
+    public abstract class Tower : MonoBehaviour {
         public int Cost;
         public int Row;
         public int Col;
         
         private Vector3 _currentMouseDown;
+        
+        public bool CanShoot = true;
 
         private void OnMouseOver() {
             if (Input.GetMouseButtonDown(0)) {
@@ -26,5 +29,12 @@ namespace Code {
                 }
             }
         }
+
+        private void Update() {
+            Enemy[] enemies = FindObjectsOfType<Enemy>();
+            Attack(enemies);
+        }
+
+        protected abstract void Attack(Enemy[] enemies);
     }
 }

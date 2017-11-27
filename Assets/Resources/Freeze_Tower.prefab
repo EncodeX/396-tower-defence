@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33686055229187116}
   - component: {fileID: 65843916419150126}
   - component: {fileID: 23149615877540216}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33001122682011126}
   - component: {fileID: 136744544713356884}
   - component: {fileID: 23370146917124358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 54354092086685540}
   - component: {fileID: 23479829657241700}
   - component: {fileID: 114793395171288898}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Freeze_Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,6 +271,7 @@ MonoBehaviour:
   Cost: 0
   Row: 0
   Col: 0
+  CanShoot: 1
 --- !u!136 &136744544713356884
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -293,7 +294,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_Extents: {x: 0.7, y: 1, z: 0.7}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

@@ -114,7 +114,7 @@ namespace Code {
             }
             foreach (TowerTypeA t in allTowerA)
             {
-                t.canShoot = false;
+                t.CanShoot = false;
             }
         }
     }

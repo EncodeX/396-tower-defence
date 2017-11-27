@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Code {
     public class TowerTypeA : Tower {
@@ -7,7 +8,6 @@ namespace Code {
         
         private Transform _head;
         private Transform _gun;
-        public bool canShoot = true;
 
         public GameObject Initialize(int row, int col) {
             Cost = 100;
@@ -31,10 +31,9 @@ namespace Code {
             _cooldownTime = Time.time;
         }
 
-        // Update is called once per frame
-        void Update() {
+        protected override void Attack(Enemy[] enemies) {
             Enemy closestEnemy = null;
-            foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
+            foreach (Enemy enemy in enemies) {
                 if (closestEnemy == null) {
                     closestEnemy = enemy;
                 }
@@ -46,7 +45,7 @@ namespace Code {
             if (closestEnemy != null) {
                 Vector3 relativePos = closestEnemy.transform.position - _head.position;
                 _head.transform.rotation = Quaternion.LookRotation(relativePos);
-                if(canShoot)
+                if(CanShoot)
                     Shoot();
             }
         }
