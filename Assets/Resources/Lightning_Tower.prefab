@@ -331,6 +331,7 @@ MonoBehaviour:
   Row: 0
   Col: 0
   CanShoot: 1
+  Mat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!135 &135203143032904434
 SphereCollider:
   m_ObjectHideFlags: 1

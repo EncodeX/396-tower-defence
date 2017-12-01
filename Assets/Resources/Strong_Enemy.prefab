@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Goal: {x: -2, y: 0, z: -2}
-  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  Mat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136261461504507282
 CapsuleCollider:
   m_ObjectHideFlags: 1
