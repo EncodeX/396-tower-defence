@@ -105,18 +105,26 @@ namespace Code
 	        _shocked = true;
 
 	        Enemy closestEnemy = null;
+	        float nearestDist = float.MaxValue;
 	        foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
 		        if (enemy._shocked) continue;
 		        
 		        if (closestEnemy == null) {
 			        closestEnemy = enemy;
 		        }
-		        if (Vector3.Distance(transform.position, enemy.transform.position) <=
-		            Vector3.Distance(transform.position, closestEnemy.transform.position)) {
+		        float enemyDistanceX = Mathf.Abs(transform.position.x - enemy.transform.position.x);
+		        float enemyDistanceZ = Mathf.Abs(transform.position.z - enemy.transform.position.z);
+		        float closestDistanceX = Mathf.Abs(transform.position.x - closestEnemy.transform.position.x);
+		        float closestDistanceZ = Mathf.Abs(transform.position.z - closestEnemy.transform.position.z);
+		        float enemySqrDist = Mathf.Pow(enemyDistanceX, 2) + Mathf.Pow(enemyDistanceZ, 2);
+		        float closestSqrDist = Mathf.Pow(closestDistanceX, 2) + Mathf.Pow(closestDistanceZ, 2);
+				
+		        if (enemyDistanceX < 1.5f && enemyDistanceZ < 1.5f && enemySqrDist <= closestSqrDist) {
 			        closestEnemy = enemy;
+			        nearestDist = Mathf.Min(enemyDistanceX, enemyDistanceZ);
 		        }
 	        }
-	        if (closestEnemy != null && Vector3.Distance(transform.position, closestEnemy.transform.position) < 1f) {
+	        if (closestEnemy != null && nearestDist < 1.5f) {
 		        closestEnemy.Shocking(damage * .6f, count + 1);
 		        _targetEnemy = closestEnemy;
 		        _lightningTime = Time.time + _lightningDuration;
