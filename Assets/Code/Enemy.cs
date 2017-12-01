@@ -95,11 +95,11 @@ namespace Code
 				enemy._shocked = false;
 			}
 			
-			Shocking(3.0f);
+			Shocking(3.0f, 0);
 		}
 
-        public void Shocking(float damage) {
-	        if (_shocked) return;
+        public void Shocking(float damage, int count) {
+	        if (_shocked || count > 1) return;
 	        
 	        PerformDamage(damage);
 	        _shocked = true;
@@ -117,7 +117,7 @@ namespace Code
 		        }
 	        }
 	        if (closestEnemy != null && Vector3.Distance(transform.position, closestEnemy.transform.position) < 1f) {
-		        closestEnemy.Shocking(damage * .6f);
+		        closestEnemy.Shocking(damage * .6f, count + 1);
 		        _targetEnemy = closestEnemy;
 		        _lightningTime = Time.time + _lightningDuration;
 	        }
