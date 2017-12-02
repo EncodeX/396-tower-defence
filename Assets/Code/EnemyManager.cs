@@ -78,7 +78,7 @@ namespace Code {
         private float timeLeft = 0f;
         private bool inWave = false;
         private bool IsGameOver = false;
-        private int _waveTotalNum = 10;
+        private int _waveTotalNum = 2;
 
         public static float NormalEnemySpeed = 0.5f;
         public static float StrongEnemySpeed = 0.3f;
@@ -99,20 +99,25 @@ namespace Code {
             _fastEnemy = Resources.Load("Fast_Enemy");
             _holder = holder;
             _agent = agent;
+            Debug.Log("Gen enemyManager");
         }
 
         public void Update() {
+			if (waveNum > _waveTotalNum || IsGameOver)
+			{
+                Debug.Log("GameOver");
+				IsGameOver = true;
+				return;
+			}
+
+           
             if (_checkCanWalkNext == 1) {
                 _checkCanWalkNext = 2;
             }else if (_checkCanWalkNext == 2) {
                 CheckCanWalk();
             }
             
-            if (waveNum > _waveTotalNum)
-            {
-                IsGameOver = true;
-                return;
-            }
+
             if (Time.time - waveOverTime <= _waveover)
             {
                 timeLeft = timeOut[waveNum-1] - (Time.time - waveOverTime); 
@@ -188,7 +193,7 @@ namespace Code {
             {
                 return;
             }
-            Vector3 pos2 = new Vector3(1f, 0.3f, 2f);
+            Vector3 pos2 = new Vector3(2f, 0.3f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
             ForceSpawn(pos2, rotation, StrongEnemySpeed, "StrongEnemy", StrongEnemyHealthpoints);
         }
@@ -203,7 +208,7 @@ namespace Code {
             {
                 return;
             }
-            Vector3 pos3 = new Vector3(2f, 0.3f, 1f);
+            Vector3 pos3 = new Vector3(2f, 0.3f, 2f);
             Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
             ForceSpawn(pos3, rotation, FastEnemySpeed, "FastEnemy", FastEnemyHealthpoints);
         }

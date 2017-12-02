@@ -26,6 +26,7 @@ namespace Code {
 //        public bool towerNotification;
 
         private void Start() {
+            Debug.Log("Gen Game");
             Ctx = this;
             BaseHealthBar = GameObject.Find("BaseHealthBar").GetComponent<BaseHealthBar>();
             Camera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -106,9 +107,9 @@ namespace Code {
 
         public void halt()
         {
-            NormalEnemy[] allNormalEnemy = Object.FindObjectsOfType<NormalEnemy>();
+            Enemy[] allEnemy = Object.FindObjectsOfType<Enemy>();
             TowerTypeA[] allTowerA = Object.FindObjectsOfType<TowerTypeA>();
-            foreach (NormalEnemy a in allNormalEnemy)
+            foreach (Enemy a in allEnemy)
             {
                 a.GetComponent<NavMeshAgent>().speed = 0;
             }
