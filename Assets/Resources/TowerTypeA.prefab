@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4712048484292166}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 33456530466980444}
   - component: {fileID: 136507596560653130}
   - component: {fileID: 23119224059776748}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 65593662288247424}
   - component: {fileID: 208645917903502660}
   - component: {fileID: 54751793885265554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TowerTypeA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 33715376632682794}
   - component: {fileID: 135236069696408136}
   - component: {fileID: 23023856173149676}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 33138708963412302}
   - component: {fileID: 136338991181990450}
   - component: {fileID: 23767726757272650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ MonoBehaviour:
   Cost: 0
   Row: 0
   Col: 0
-  canShoot: 1
+  CanShoot: 1
 --- !u!135 &135236069696408136
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -374,7 +374,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_Extents: {x: 0.7, y: 1, z: 0.7}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1

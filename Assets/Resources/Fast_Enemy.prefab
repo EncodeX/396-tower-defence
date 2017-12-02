@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54182169787140056}
   - component: {fileID: 195565623433029954}
   - component: {fileID: 114094788643891394}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fast_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c254c1b7a3cf69a4daf9ff92419fdb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {x: -2, y: 0, z: -2}
-  mat: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  Goal: {x: -2, y: 0, z: -2}
+  Mat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!136 &136020487463080812
 CapsuleCollider:
   m_ObjectHideFlags: 1
