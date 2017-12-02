@@ -18,7 +18,7 @@ namespace Code
 		
 		public GameObject Initialize(int row, int col)
 		{
-			Cost = 100;
+			Cost = 180;
 			Row = row;
 			Col = col;
 			return gameObject;
