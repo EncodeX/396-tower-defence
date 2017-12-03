@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44824737, g: 0.49827445, b: 0.5755826, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482472, g: 0.49827385, b: 0.57558215, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1830,7 +1830,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &900734520
 MonoBehaviour:
@@ -3118,7 +3118,6 @@ GameObject:
   - component: {fileID: 1569804131}
   - component: {fileID: 1569804133}
   - component: {fileID: 1569804132}
-  - component: {fileID: 1569804134}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -3178,23 +3177,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1569804130}
---- !u!114 &1569804134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1569804130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c28904a571684c599f1c1cf53550f389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BaseHealthBar: {fileID: 0}
-  Camera: {fileID: 0}
-  GameOverPanel: {fileID: 1569804130}
-  GameOverText: {fileID: 528428718}
-  LastTowerRow: 0
-  LastTowerCol: 0
 --- !u!1 &1617609380
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,7 +26,6 @@ namespace Code {
 //        public bool towerNotification;
 
         private void Start() {
-            Debug.Log("Gen Game");
             Ctx = this;
             BaseHealthBar = GameObject.Find("BaseHealthBar").GetComponent<BaseHealthBar>();
             Camera = GameObject.Find("Main Camera").GetComponent<Camera>();

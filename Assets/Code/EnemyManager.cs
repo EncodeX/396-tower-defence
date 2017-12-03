@@ -78,7 +78,7 @@ namespace Code {
         private float timeLeft = 0f;
         private bool inWave = false;
         private bool IsGameOver = false;
-        private int _waveTotalNum = 2;
+        private int _waveTotalNum = 10;
 
         public static float NormalEnemySpeed = 0.5f;
         public static float StrongEnemySpeed = 0.3f;
@@ -99,13 +99,11 @@ namespace Code {
             _fastEnemy = Resources.Load("Fast_Enemy");
             _holder = holder;
             _agent = agent;
-            Debug.Log("Gen enemyManager");
         }
 
         public void Update() {
 			if (waveNum > _waveTotalNum || IsGameOver)
 			{
-                Debug.Log("GameOver");
 				IsGameOver = true;
 				return;
 			}
